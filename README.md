@@ -29,6 +29,7 @@
 ### 03 | HTTP Server
 
 - Add directory index support to the HTTP server from the course.
+- Note `templates` is not bundled into the binary, the following command should be run from the project root.
 
 ```bash
 ./mycli http serve --port 3000 --dir /path/to/dir

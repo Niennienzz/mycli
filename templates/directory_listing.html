@@ -1,0 +1,9 @@
+<html lang="en">
+<body>
+<ul>
+    {% for file in files %}
+    <li><a href="{{ file.path }}">{{ file.name }}</a></li>
+    {% endfor %}
+</ul>
+</body>
+</html>
