@@ -2,7 +2,8 @@
 
 ## Requirements
 
-Write a Rust CLI program that supports the following three subcommands.
+- Write a Rust CLI program that supports the following three subcommands.
+- Course examples can be found [here](https://github.com/tyr-rust-bootcamp/01-rcli).
 
 ### 01 | Text Encryption
 

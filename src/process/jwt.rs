@@ -10,6 +10,7 @@ pub struct JwtClaims {
     #[serde(rename = "exp")]
     pub exp: i64,
 }
+
 pub struct Jwt;
 
 impl Jwt {

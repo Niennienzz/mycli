@@ -1,4 +1,5 @@
 use clap::Parser;
+
 use mycli::{CmdExecutor, Opts};
 
 #[tokio::main]
