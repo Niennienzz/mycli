@@ -38,7 +38,7 @@ mod tests {
         let claims = JwtClaims {
             sub: "subject".to_string(),
             aud: ALLOWED_JWT_AUDIENCES[0].to_string(),
-            exp: 25246260000,
+            exp: i64::MAX,
         };
 
         let signed_token = Jwt::process_sign(key, &claims).unwrap();

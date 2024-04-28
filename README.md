@@ -22,7 +22,7 @@
 - Generated JWT tokens should pass the verification on [jwt.io](https://jwt.io/).
 
 ```bash
-./mycli jwt sign --key XXXXXXXX --sub user1 --aud "https://u.geekbang.org/" --exp 2524626000
+./mycli jwt sign --key XXXXXXXX --sub user1 --aud "https://u.geekbang.org" --exp 2524626000
 ./mycli jwt verify --key XXXXXXXX --token eyJ0eXXXXX.eyJzdXXXXX.XXXXX
 ```
 
