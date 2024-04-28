@@ -4,10 +4,12 @@ use clap::Parser;
 use enum_dispatch::enum_dispatch;
 
 pub use self::chacha::*;
+pub use self::http::*;
 pub use self::jwt::*;
 
 mod chacha;
 mod jwt;
+mod http;
 
 #[derive(Debug, Parser)]
 #[command(name = "my-cli", version, author, about, long_about = None)]
@@ -23,6 +25,8 @@ pub enum SubCommand {
     ChaCha(ChaChaSubCommand),
     #[command(subcommand, name = "jwt", about = "Sign/verify JWT tokens")]
     Jwt(JwtSubCommand),
+    #[command(subcommand, about = "A simple HTTP file server")]
+    Http(HttpSubCommand),
 }
 
 #[allow(dead_code)]
