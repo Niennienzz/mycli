@@ -21,8 +21,8 @@ mycli text decrypt --key XXX --input encrypted_hello.txt
 - Generated JWT tokens should pass the verification on [jwt.io](https://jwt.io/).
 
 ```bash
-mycli jwt sign --sub acme --aud device1 --exp 14d
-mycli jwt verify --token "{token}"
+mycli jwt sign --key XXX --sub user1 --aud "https://u.geekbang.org/" --exp 2524626000
+mycli jwt verify --key XXX --token eyJ0eXXXXX.eyJzdXXXXX.XXXXX
 ```
 
 ### 03 | HTTP Server

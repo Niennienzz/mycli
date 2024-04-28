@@ -4,8 +4,10 @@ use clap::Parser;
 use enum_dispatch::enum_dispatch;
 
 pub use self::chacha::*;
+pub use self::jwt::*;
 
 mod chacha;
+mod jwt;
 
 #[derive(Debug, Parser)]
 #[command(name = "my-cli", version, author, about, long_about = None)]
@@ -19,17 +21,11 @@ pub struct Opts {
 pub enum SubCommand {
     #[command(subcommand, name = "text", about = "Encrypt/decrypt text with ChaCha20-Poly1305")]
     ChaCha(ChaChaSubCommand),
+    #[command(subcommand, name = "jwt", about = "Sign/verify JWT tokens")]
+    Jwt(JwtSubCommand),
 }
 
-fn verify_file(filename: &str) -> Result<String, &'static str> {
-    // if input is "-" or file exists
-    if filename == "-" || Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("File does not exist")
-    }
-}
-
+#[allow(dead_code)]
 fn verify_path(path: &str) -> Result<PathBuf, &'static str> {
     let p = Path::new(path);
     if p.exists() && p.is_dir() {
