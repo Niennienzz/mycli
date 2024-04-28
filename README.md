@@ -12,8 +12,8 @@
 - The output is a base64-encoded string written to the console.
 
 ```bash
-./mycli text encrypt --key XXX --input hello.txt
-./mycli text decrypt --key XXX --input encrypted_hello.txt
+./mycli text encrypt --key XXXXXXXX --input hello.txt
+./mycli text decrypt --key XXXXXXXX --input encrypted_hello.txt
 ```
 
 ### 02 | JWT Generation and Verification
@@ -22,8 +22,8 @@
 - Generated JWT tokens should pass the verification on [jwt.io](https://jwt.io/).
 
 ```bash
-./mycli jwt sign --key XXX --sub user1 --aud "https://u.geekbang.org/" --exp 2524626000
-./mycli jwt verify --key XXX --token eyJ0eXXXXX.eyJzdXXXXX.XXXXX
+./mycli jwt sign --key XXXXXXXX --sub user1 --aud "https://u.geekbang.org/" --exp 2524626000
+./mycli jwt verify --key XXXXXXXX --token eyJ0eXXXXX.eyJzdXXXXX.XXXXX
 ```
 
 ### 03 | HTTP Server

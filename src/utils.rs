@@ -3,9 +3,9 @@ use std::{fs::File, io::Read};
 use anyhow::Result;
 
 pub const ALLOWED_JWT_AUDIENCES: [&str; 3] = [
-    "https://u.geekbang.org/",
-    "https://time.geekbang.org/",
-    "https://www.dragonflydb.io/",
+    "https://u.geekbang.org",
+    "https://time.geekbang.org",
+    "https://www.dragonflydb.io",
 ];
 
 pub fn get_reader(input: &str) -> Result<Box<dyn Read>> {

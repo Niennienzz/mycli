@@ -3,6 +3,8 @@ use clap::Parser;
 use crate::CmdExecutor;
 use crate::process::jwt;
 
+use super::{verify_jwt_audience, verify_key};
+
 #[derive(Debug, Parser)]
 pub enum JwtSubCommand {
     #[command(name = "sign", about = "Sign a JWT token")]
@@ -35,12 +37,12 @@ impl CmdExecutor for JwtSubCommand {
 
 #[derive(Debug, Parser)]
 pub struct JwtSignOpts {
-    #[arg(long)]
+    #[arg(long, value_parser = verify_key)]
     pub key: String,
+    #[arg(long, value_parser = verify_jwt_audience)]
+    pub aud: String,
     #[arg(long)]
     pub sub: String,
-    #[arg(long)]
-    pub aud: String,
     #[arg(long)]
     pub exp: i64,
 }

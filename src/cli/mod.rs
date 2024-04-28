@@ -29,11 +29,41 @@ pub enum SubCommand {
     Http(HttpSubCommand),
 }
 
+// Helper function to verify file existence.
+// It also allows "-" as a special case for console input.
+fn verify_file(filename: &str) -> Result<String, &'static str> {
+    if filename == "-" || Path::new(filename).exists() {
+        Ok(filename.into())
+    } else {
+        Err("File does not exist")
+    }
+}
+
 fn verify_path(path: &str) -> Result<PathBuf, &'static str> {
     let p = Path::new(path);
     if p.exists() && p.is_dir() {
         Ok(path.into())
     } else {
         Err("Path does not exist or is not a directory")
+    }
+}
+
+const MIN_KEY_LEN: usize = 8;
+
+const VERIFY_KEY_ERR: &str = concat!("Key must be at least ", stringify!(MIN_KEY_LEN), " characters long");
+
+fn verify_key(key: &str) -> Result<String, String> {
+    if key.len() >= MIN_KEY_LEN {
+        Ok(key.into())
+    } else {
+        Err(VERIFY_KEY_ERR.into())
+    }
+}
+
+fn verify_jwt_audience(aud: &str) -> Result<String, &'static str> {
+    if crate::utils::ALLOWED_JWT_AUDIENCES.contains(&aud) {
+        Ok(aud.into())
+    } else {
+        Err("Invalid audience")
     }
 }

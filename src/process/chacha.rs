@@ -71,12 +71,17 @@ mod tests {
 
     #[test]
     fn test_process_encrypt_decrypt() {
-        let user_key = "test-key";
+        let key = "test-key";
+        let bad_key = "bad-key";
         let input = "test-input";
         let mut reader = input.as_bytes();
-        let encrypted = ChaCha::process_encrypt(user_key, &mut reader).unwrap();
+        let encrypted = ChaCha::process_encrypt(key, &mut reader).unwrap();
         let mut reader = encrypted.as_bytes();
-        let decrypted = ChaCha::process_decrypt(user_key, &mut reader).unwrap();
+        let decrypted = ChaCha::process_decrypt(key, &mut reader).unwrap();
         assert_eq!(input, decrypted);
+
+        let mut reader = input.as_bytes();
+        let failed = ChaCha::process_decrypt(bad_key, &mut reader);
+        assert!(failed.is_err());
     }
 }

@@ -1,9 +1,9 @@
-use std::path::Path;
-
 use clap::Parser;
 
 use crate::CmdExecutor;
 use crate::process::chacha::ChaCha;
+
+use super::{verify_file, verify_key};
 
 #[derive(Debug, Parser)]
 pub enum ChaChaSubCommand {
@@ -34,16 +34,6 @@ impl CmdExecutor for ChaChaSubCommand {
 pub struct ChaChaOpts {
     #[arg(long, value_parser = verify_file, default_value = "-")]
     pub input: String,
-    #[arg(long)]
+    #[arg(long, value_parser = verify_key)]
     pub key: String,
-}
-
-// Helper function to verify file existence.
-// It also allows "-" as a special case for console input.
-fn verify_file(filename: &str) -> Result<String, &'static str> {
-    if filename == "-" || Path::new(filename).exists() {
-        Ok(filename.into())
-    } else {
-        Err("File does not exist")
-    }
 }
