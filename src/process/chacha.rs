@@ -1,10 +1,14 @@
 use std::io::Read;
 
-use base64::{Engine as _, engine::general_purpose};
 use chacha20poly1305::{aead::{Aead, AeadCore, KeyInit, OsRng}, ChaCha20Poly1305};
 use chacha20poly1305::aead::generic_array::GenericArray;
 use chacha20poly1305::aead::generic_array::typenum::Unsigned;
 use sha2::{Digest, Sha256};
+
+use super::{
+    b64_url_safe_no_pad_decode,
+    b64_url_safe_no_pad_encode,
+};
 
 pub fn process_decrypt(user_key: &str, reader: &mut dyn Read) -> anyhow::Result<String> {
     // Use the user key to construct the cipher.
@@ -16,7 +20,7 @@ pub fn process_decrypt(user_key: &str, reader: &mut dyn Read) -> anyhow::Result<
     let buf = buf.trim();
 
     // Decode the input, split the nonce & ciphertext, and decrypt.
-    let encrypted = general_purpose::URL_SAFE.decode(buf.as_bytes())?;
+    let encrypted = b64_url_safe_no_pad_decode(buf)?;
     type NonceSize = <ChaCha20Poly1305 as AeadCore>::NonceSize;
     let (nonce, ciphertext) = encrypted.split_at(NonceSize::to_usize());
     let nonce = GenericArray::from_slice(nonce);
@@ -43,7 +47,7 @@ pub fn process_encrypt(user_key: &str, reader: &mut dyn Read) -> anyhow::Result<
     match ciphertext {
         Ok(mut result) => {
             result.splice(..0, nonce.iter().copied());
-            Ok(general_purpose::URL_SAFE.encode(&result))
+            Ok(b64_url_safe_no_pad_encode(&result))
         }
         Err(err) => anyhow::bail!("Error encrypting: {}", err),
     }
