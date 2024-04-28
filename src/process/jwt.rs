@@ -3,11 +3,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct JwtClaims {
-    #[serde(rename = "sub")]
     pub sub: String,
-    #[serde(rename = "aud")]
     pub aud: String,
-    #[serde(rename = "exp")]
     pub exp: i64,
 }
 

@@ -29,7 +29,6 @@ pub enum SubCommand {
     Http(HttpSubCommand),
 }
 
-#[allow(dead_code)]
 fn verify_path(path: &str) -> Result<PathBuf, &'static str> {
     let p = Path::new(path);
     if p.exists() && p.is_dir() {
