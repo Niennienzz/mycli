@@ -2,7 +2,10 @@ use std::io::Read;
 
 use base64::Engine;
 use base64::engine::general_purpose;
-use chacha20poly1305::{aead::{Aead, AeadCore, KeyInit, OsRng}, ChaCha20Poly1305};
+use chacha20poly1305::{
+    aead::{Aead, AeadCore, KeyInit, OsRng},
+    ChaCha20Poly1305,
+};
 use chacha20poly1305::aead::generic_array::GenericArray;
 use chacha20poly1305::aead::generic_array::typenum::Unsigned;
 use sha2::{Digest, Sha256};

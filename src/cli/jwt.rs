@@ -16,19 +16,15 @@ pub enum JwtSubCommand {
 impl CmdExecutor for JwtSubCommand {
     async fn execute(self) -> anyhow::Result<()> {
         let ret = match self {
-            JwtSubCommand::Sign(opts) => {
-                jwt::Jwt::process_sign(
-                    &opts.key,
-                    &jwt::JwtClaims {
-                        sub: opts.sub,
-                        aud: opts.aud,
-                        exp: opts.exp,
-                    },
-                )?
-            }
-            JwtSubCommand::Verify(opts) => {
-                jwt::Jwt::process_verify(&opts.key, &opts.token)?
-            }
+            JwtSubCommand::Sign(opts) => jwt::Jwt::process_sign(
+                &opts.key,
+                &jwt::JwtClaims {
+                    sub: opts.sub,
+                    aud: opts.aud,
+                    exp: opts.exp,
+                },
+            )?,
+            JwtSubCommand::Verify(opts) => jwt::Jwt::process_verify(&opts.key, &opts.token)?,
         };
         println!("{}", ret);
         Ok(())

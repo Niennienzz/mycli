@@ -8,8 +8,8 @@ pub use self::http::*;
 pub use self::jwt::*;
 
 mod chacha;
-mod jwt;
 mod http;
+mod jwt;
 
 #[derive(Debug, Parser)]
 #[command(name = "my-cli", version, author, about, long_about = None)]
@@ -21,7 +21,11 @@ pub struct Opts {
 #[derive(Debug, Parser)]
 #[enum_dispatch(CmdExecutor)]
 pub enum SubCommand {
-    #[command(subcommand, name = "text", about = "Encrypt/decrypt text with ChaCha20-Poly1305")]
+    #[command(
+        subcommand,
+        name = "text",
+        about = "Encrypt/decrypt text with ChaCha20-Poly1305"
+    )]
     ChaCha(ChaChaSubCommand),
     #[command(subcommand, name = "jwt", about = "Sign/verify JWT tokens")]
     Jwt(JwtSubCommand),
@@ -50,7 +54,11 @@ fn verify_path(path: &str) -> Result<PathBuf, &'static str> {
 
 const MIN_KEY_LEN: usize = 8;
 
-const VERIFY_KEY_ERR: &str = concat!("Key must be at least ", stringify!(MIN_KEY_LEN), " characters long");
+const VERIFY_KEY_ERR: &str = concat!(
+    "Key must be at least ",
+    stringify!(MIN_KEY_LEN),
+    " characters long"
+);
 
 fn verify_key(key: &str) -> Result<String, String> {
     if key.len() >= MIN_KEY_LEN {

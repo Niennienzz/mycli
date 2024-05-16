@@ -49,7 +49,10 @@ async fn file_handler(
     let p = std::path::Path::new(&state.path).join(path);
     info!("Reading file {:?}", p);
     if !p.exists() {
-        (StatusCode::NOT_FOUND, format!("File {} note found", p.display()))
+        (
+            StatusCode::NOT_FOUND,
+            format!("File {} note found", p.display()),
+        )
     } else {
         // Check if 'p' is a directory.
         if p.is_dir() {
@@ -59,7 +62,10 @@ async fn file_handler(
                     let mut files: Vec<SimpleFile> = Vec::new();
                     while let Ok(Some(entry)) = entries.next_entry().await {
                         let entry_path = entry.path();
-                        let file_name = entry.file_name().into_string().unwrap_or_else(|_| String::from("Invalid UTF-8"));
+                        let file_name = entry
+                            .file_name()
+                            .into_string()
+                            .unwrap_or_else(|_| String::from("Invalid UTF-8"));
                         let file = SimpleFile {
                             name: file_name,
                             path: entry_path.display().to_string(),

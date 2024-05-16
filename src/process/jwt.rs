@@ -14,16 +14,24 @@ pub struct Jwt;
 
 impl Jwt {
     pub fn process_sign(user_key: &str, claims: &JwtClaims) -> anyhow::Result<String> {
-        encode(&Header::default(), claims, &EncodingKey::from_secret(user_key.as_bytes()))
-            .map_err(|err| anyhow::anyhow!("ERROR JWT signing: {}", err))
+        encode(
+            &Header::default(),
+            claims,
+            &EncodingKey::from_secret(user_key.as_bytes()),
+        )
+        .map_err(|err| anyhow::anyhow!("ERROR JWT signing: {}", err))
     }
 
     pub fn process_verify(user_key: &str, token: &str) -> anyhow::Result<String> {
         let mut validation = Validation::default();
         validation.set_audience(&ALLOWED_JWT_AUDIENCES);
-        decode::<JwtClaims>(&token, &DecodingKey::from_secret(user_key.as_bytes()), &validation)
-            .map(|data| format!("Verified: {:?}", data.claims))
-            .map_err(|err| anyhow::anyhow!("ERROR JWT verifying: {}", err))
+        decode::<JwtClaims>(
+            &token,
+            &DecodingKey::from_secret(user_key.as_bytes()),
+            &validation,
+        )
+        .map(|data| format!("Verified: {:?}", data.claims))
+        .map_err(|err| anyhow::anyhow!("ERROR JWT verifying: {}", err))
     }
 }
 
@@ -45,7 +53,11 @@ mod tests {
         assert!(!signed_token.is_empty(), "The token should not be empty");
 
         let result = Jwt::process_verify(key, &signed_token).unwrap();
-        assert_eq!(result, format!("Verified: {:?}", claims), "Claims should match");
+        assert_eq!(
+            result,
+            format!("Verified: {:?}", claims),
+            "Claims should match"
+        );
 
         let result = Jwt::process_verify(bad_key, &signed_token);
         assert!(result.is_err(), "Should fail with the wrong key");
