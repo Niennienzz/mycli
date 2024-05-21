@@ -1,4 +1,4 @@
-use jsonwebtoken::{decode, DecodingKey, encode, EncodingKey, Header, Validation};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
 
 use crate::utils::ALLOWED_JWT_AUDIENCES;
@@ -26,7 +26,7 @@ impl Jwt {
         let mut validation = Validation::default();
         validation.set_audience(&ALLOWED_JWT_AUDIENCES);
         decode::<JwtClaims>(
-            &token,
+            token,
             &DecodingKey::from_secret(user_key.as_bytes()),
             &validation,
         )

@@ -4,8 +4,8 @@ use anyhow::Result;
 use axum::{
     extract::{Path, State},
     http::StatusCode,
-    Router,
     routing::get,
+    Router,
 };
 use serde::Serialize;
 use tera::Context;

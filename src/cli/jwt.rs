@@ -1,7 +1,7 @@
 use clap::Parser;
 
-use crate::CmdExecutor;
 use crate::process::jwt;
+use crate::CmdExecutor;
 
 use super::{verify_jwt_audience, verify_key};
 

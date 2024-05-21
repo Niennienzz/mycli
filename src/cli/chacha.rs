@@ -1,7 +1,7 @@
 use clap::Parser;
 
-use crate::CmdExecutor;
 use crate::process::chacha::ChaCha;
+use crate::CmdExecutor;
 
 use super::{verify_file, verify_key};
 
